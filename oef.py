@@ -42,7 +42,7 @@ def on_message(mqttc, obj, msg):
         print('Alarm staat uit')
 
     #Blink alarm als getriggerd wordt
-    if msg.payload.decode() == 'alarmTrig'
+    if msg.payload.decode() == 'alarmTrig':
         alarmring = True
         try:
             print('Alarm is triggered')
@@ -56,9 +56,11 @@ def on_message(mqttc, obj, msg):
             time.sleep(0.2)
 
     #Zet led uit als gestopt wordt
-    elif msg.payload.decode() == 'alarmStop'
+    elif msg.payload.decode() == 'alarmStop':
         alarmring = False
         print('Alarm is gestopt')
+print(msg.topic)
+print(msg.payload.decode())
 
 def led():
     #Blink alarm led wanneer triggered
@@ -67,12 +69,13 @@ def led():
         time.sleep(0.2)
         io.output(20,0)
         time.sleep(0.2)
-    else
+    elif alarmring == False:
         io.output(20, 0)
 
 #Log message in console
-print(msg.topic)
-print(msg.payload.decode())
+#print(msg.topic)
+#print(msg.payload.decode())
+
 
 def main():
     try:
@@ -86,10 +89,10 @@ def main():
             led()
             #Start Alarm button
             if io.event_detected(22):
-                if alarmstate == False
+                if alarmstate == False:
                     mqttc.publish('home/alarm/system', payload='alarmAan', qos=0, retain=False)
                     print('Alarm aan zetten')
-                elif alarmstate == True
+                elif alarmstate == True:
                     mqttc.publish('home/alarm/system', payload='alarmUit', qos=0, retain=False)
                     print('Alarm uit zetten')
             #Stop Alarm trigger button
