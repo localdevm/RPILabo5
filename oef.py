@@ -43,9 +43,9 @@ def on_message(mqttc, obj, msg):
 
     #Blink alarm als getriggerd wordt
     if msg.payload.decode() == 'alarmTrig':
-        alarmring = True
         try:
             print('Alarm is triggered')
+            alarmring = True
             file = open("alarmlog.txt", 'a')
         except IOError:
             print("Unable to create")
@@ -59,8 +59,7 @@ def on_message(mqttc, obj, msg):
     elif msg.payload.decode() == 'alarmStop':
         alarmring = False
         print('Alarm is gestopt')
-print(msg.topic)
-print(msg.payload.decode())
+
 
 def led():
     #Blink alarm led wanneer triggered
